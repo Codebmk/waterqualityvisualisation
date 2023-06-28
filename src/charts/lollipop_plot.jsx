@@ -10,7 +10,7 @@ const LollipopBarChart = ({ data }) => {
     const svg = d3.select(svgRef.current);
 
     // Set the dimensions and margins of the plot
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const margin = { top: 20, right: 40, bottom: 30, left: 40 };
     const width = parseInt(d3.select(svgRef.current).style("width"), 10) - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
@@ -64,10 +64,11 @@ const LollipopBarChart = ({ data }) => {
     // Add the y-axis
     svg
       .append("g")
-      .attr("transform", `translate(${margin.left}, ${margin.top})`)
+      .attr("transform", `translate(${margin.left + 10}, ${margin.top})`)
       .call(d3.axisLeft(yScale))
       .selectAll("text")
-      .attr("text-anchor", "right");;
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-45)");
 
     // y-axis label
     svg
