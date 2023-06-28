@@ -8,7 +8,11 @@ import {
   Card,
   CardContent,
   Paper,
+  Dialog,
+  Toolbar,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import BarPlot from "./charts/barplot";
 import LollipopBarChart from "./charts/lollipop_plot";
 import ChoroplethMap from "./charts/map";
@@ -23,6 +27,7 @@ import BubbleChart from "./charts/bubble_chart";
 export default function App() {
   const [data, setData] = useState([]);
   const [geoJsonData, seGeoJsonData] = useState([]);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -78,7 +83,7 @@ export default function App() {
       <AppBar
         position="static"
         color="primary"
-        style={{ marginBottom: "20px", padding: "8px" }}
+        style={{ marginBottom: "20px", padding: "8px", display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row", cursor: "pointer" }}
       >
         <Typography
           variant="h6"
@@ -90,6 +95,9 @@ export default function App() {
           }}
         >
           Water quality in Uganda
+        </Typography>
+        <Typography>
+          <a onClick={() => setOpen(true)}>Water Quality Map</a>
         </Typography>
       </AppBar>
 
@@ -216,24 +224,22 @@ export default function App() {
                 </Paper>
               </Grid>
             </Grid>
-            <Grid item lg={12} sm={12} xl={2} xs={12} position={"relative"}>
-              <Typography
-                margin={"10px"}
-                variant="h6"
-                color={"red"}
-                fontWeight={"600"}
-                textAlign={"center"}
-              >
-                Uganda Water Quality Map
-              </Typography>
-              <Paper
-                elevation={3}
-                style={{ margin: "10px", position: "relative" }}
-              >
-                <ChoroplethMap sitesData={geoJsonData} />
-              </Paper>
-            </Grid>
           </Grid>
+          <Dialog fullScreen open={open} onClose={() => setOpen(false)}>
+            <AppBar sx={{ position: 'relative' }}>
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={() => setOpen(false)}
+                  aria-label="close"
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+            <ChoroplethMap sitesData={geoJsonData} />
+          </Dialog>
         </>
       )}
     </Box>

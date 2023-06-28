@@ -170,7 +170,7 @@ const ChoroplethMap = ({ sitesData }) => {
   };
 
   return (
-    <Box width={"100%"} height={"400px"}>
+    <Box width={"100%"} height={"100%"}>
       <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
     </Box>
   );
