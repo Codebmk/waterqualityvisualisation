@@ -13,20 +13,18 @@ const BarChart = ({ data }) => {
 
     const x_scale = d3
       .scaleBand()
+      .domain(data.map((d) => d.district))
       .range([margin.left, width - margin.right])
-      .padding(0.1);
+      .padding(0.2);
 
     const y_scale = d3
       .scaleLinear()
+      .domain([0, d3.max(data, (d) => d.electrical_conductivity)])
       .range([height - margin.bottom, margin.top]);
 
     let x_axis = d3.axisBottom(x_scale);
 
     let y_axis = d3.axisLeft(y_scale);
-
-    // Scale the range of the data in the domains
-    x_scale.domain(data.map((d) => d.district));
-    y_scale.domain([0, d3.max(data, (d) => d.electrical_conductivity)]);
 
     // append the rectangles for the bar chart
     svg

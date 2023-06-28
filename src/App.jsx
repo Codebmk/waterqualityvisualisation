@@ -11,6 +11,7 @@ import {
   Dialog,
   Toolbar,
   IconButton,
+  Alert,
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import BarPlot from "./charts/barplot";
@@ -29,6 +30,7 @@ export default function App() {
   const [geoJsonData, seGeoJsonData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -54,7 +56,7 @@ export default function App() {
         seGeoJsonData(payload);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
         setLoading(false);
       });
   }, []);
@@ -107,6 +109,12 @@ export default function App() {
         </Typography>
       )}
 
+      {error && <Alert severity="info" style={{ margin: "10px" }}>
+        <Typography variant="body1">
+          {error.message}
+        </Typography>
+      </Alert>}
+
       {data && (
         <>
           <Grid container spacing={2} padding={"24px"} position={"relative"}>
@@ -139,20 +147,6 @@ export default function App() {
 
           <Grid container>
             <Grid container lg={12} sm={12} xl={2} xs={12}>
-              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <Paper
-                  elevation={3}
-                  style={{
-                    margin: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "relative",
-                  }}
-                >
-                  <DonutChart data={data} />
-                </Paper>
-              </Grid>
               <Grid
                 item
                 lg={12}
@@ -181,16 +175,6 @@ export default function App() {
                 </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <Paper elevation={3} style={{ margin: "10px" }}>
-                  <LollipopBarChart data={data} />
-                </Paper>
-              </Grid>
-              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <Paper elevation={3} style={{ margin: "10px" }}>
-                  <GroupedBarChart data={data} />
-                </Paper>
-              </Grid>
-              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
                 <Paper
                   elevation={3}
                   style={{
@@ -206,6 +190,16 @@ export default function App() {
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
                 <Paper elevation={3} style={{ margin: "10px" }}>
+                  <LollipopBarChart data={data} />
+                </Paper>
+              </Grid>
+              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
+                <Paper elevation={3} style={{ margin: "10px" }}>
+                  <GroupedBarChart data={data} />
+                </Paper>
+              </Grid>
+              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
+                <Paper elevation={3} style={{ margin: "10px" }}>
                   <Typography
                     margin={"10px"}
                     variant="h6"
@@ -216,6 +210,20 @@ export default function App() {
                     Measure of Nutrient pollution in water bodies by district
                   </Typography>
                   <StackedBarChart data={data} />
+                </Paper>
+              </Grid>
+              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
+                <Paper
+                  elevation={3}
+                  style={{
+                    margin: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <DonutChart data={data} />
                 </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>

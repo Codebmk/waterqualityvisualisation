@@ -94,7 +94,7 @@ const LollipopBarChart = ({ data }) => {
         fontWeight={"600"}
         textAlign={"center"}
       >
-        Measure of acidification by type water source
+        Comparison of acidification in different water source types
       </Typography>
       <svg ref={svgRef} width="90%" height="400">
         {/* Add the chart */}

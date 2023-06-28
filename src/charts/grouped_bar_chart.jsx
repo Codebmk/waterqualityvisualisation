@@ -110,7 +110,7 @@ const GroupedBarChart = ({ data }) => {
         fontWeight={"600"}
         textAlign={"center"}
       >
-        Proportion of Salinisation against source type by district
+        Measure of salinisation depending on source type within districts
       </Typography>
       <svg ref={d3_grouped_bar_chart_ref} width="95%" height="400"></svg>
     </Box>

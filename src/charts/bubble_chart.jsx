@@ -10,7 +10,6 @@ const BubbleChart = ({ data }) => {
   data.forEach((row) => {
     tree.push({ district: row[0], value: row[1] });
   });
-  console.log(tree);
 
   // Chart dimensions
   const width = 500;

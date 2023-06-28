@@ -23,7 +23,7 @@ const PieChart = ({ data }) => {
         };
       }
       acc[d.region].count++;
-      acc[d.region].total += d.electrical_conductivity;
+      acc[d.region].total += d.ecoli;
       return acc;
     }, {});
 
@@ -55,17 +55,19 @@ const PieChart = ({ data }) => {
 
     arcs.append("title").text((d) => `${d.data.region}: ${d.value.toFixed(2)}`);
 
+    const outerArc = d3.arc().outerRadius(radius * 1.2).innerRadius(radius * 1.2);
+
     svg
       .selectAll("text")
       .data(pieData)
       .enter()
       .append("text")
       .attr("font-family", "sans-serif")
-      .attr("transform", (d) => `translate(${arc.centroid(d)})`)
+      .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")
       .attr("font-size", "12px")
-      .text((d) => `${d.data.region}:\n${d.value.toFixed(2)}`);
+      .text((d) => `${d.data.region}: ${d.value.toFixed(2)}`);
   }, [data]);
 
   return (
