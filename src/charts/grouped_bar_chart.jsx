@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { Box, Typography } from "@mui/material";
 
 const GroupedBarChart = ({ data }) => {
   const d3_grouped_bar_chart_ref = useRef(null);
@@ -8,8 +9,11 @@ const GroupedBarChart = ({ data }) => {
     if (data && data.length > 0) {
       // Chart dimensions
       const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const width = 1200;
-    const height = 400 - margin.top - margin.bottom;
+      const width = parseInt(
+        d3.select(d3_grouped_bar_chart_ref.current).style("width"),
+        10
+      );
+      const height = 400 - margin.top - margin.bottom;
 
       const svg = d3
         .select(d3_grouped_bar_chart_ref.current)
@@ -33,8 +37,6 @@ const GroupedBarChart = ({ data }) => {
         .domain(sourceType)
         .rangeRound([0, fx.bandwidth()])
         .padding(0.05);
-
-      console.log(sourceType.size);
 
       const color = d3
         .scaleOrdinal()
@@ -95,9 +97,23 @@ const GroupedBarChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div>
-      <svg ref={d3_grouped_bar_chart_ref} width="100%" height="400"></svg>
-    </div>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Typography
+        margin={"10px"}
+        variant="h6"
+        color={"red"}
+        fontWeight={"600"}
+        textAlign={"center"}
+      >
+        Proportion of Salinisation against source type by district
+      </Typography>
+      <svg ref={d3_grouped_bar_chart_ref} width="95%" height="400"></svg>
+    </Box>
   );
 };
 

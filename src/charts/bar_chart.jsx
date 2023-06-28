@@ -6,10 +6,10 @@ const BarChart = ({ data }) => {
   useEffect(() => {
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 20, bottom: 55, left: 20 };
-    const width = 1000;
+    const width = parseInt(d3.select("#d3_barchart").style('width'), 10) - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
-    const svg = d3.select("#d3_demo").attr("viewBox", [0, 0, width, height]);
+    const svg = d3.select("#d3_barchart").attr("viewBox", [0, 0, width, height]);
 
     const x_scale = d3
       .scaleBand()
@@ -61,7 +61,7 @@ const BarChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div>
+    <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}alignItems={"center"}>
       <Typography
         variant="h6"
         color={"red"}
@@ -70,14 +70,14 @@ const BarChart = ({ data }) => {
       >
         Measure of salination of water bodies by district
       </Typography>
-      <svg id="d3_demo" width="100%" height="400"></svg>
+      <svg id="d3_barchart" width="95%" height="400"></svg>
       <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
           <Box width={"20px"} height={"20px"} backgroundColor={"steelblue"} />
           <Typography variant="body2" sx={{ m: 1 }}>
           Electrical Conductivity
           </Typography>
         </Box>
-    </div>
+    </Box>
   );
 };
 

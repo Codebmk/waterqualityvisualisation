@@ -123,28 +123,31 @@ const ChoroplethMap = ({ sitesData }) => {
         .setLngLat(coordinates)
         .setHTML(
           `<div class="popup-body">
-                    <div>
-                      <span>
-                        <b>${
-                          e.features[0].properties.district +
-                          ", " +
-                          e.features[0].properties.village
-                        }</b>
-                      </span>
-                    </div>
-                    <div> 
-                      <span>
-                      ${e.features[0].properties.ph}
-                      </span> </hr>  
-                      <div>
-                        <div>
-                        <div>${e.features[0].properties.total_alkalinity}</div>
-                        <div>µg/m<sup>3</sup></div>
-                        </div> 
-                        <div>${e.features[0].properties.water_quality}</div>
-                      </div>
-                    </div>
-                  </div>`
+            <div>
+              <span>
+                <b>${
+                  e.features[0].properties.district +
+                  ", " +
+                  e.features[0].properties.village
+                }</b>
+              </span>
+            </div>
+            <div> 
+              <span>
+              pH: ${e.features[0].properties.ph}
+              </span> </hr>  
+              <div>
+                <div>
+                <div>Salinity: ${
+                  e.features[0].properties.electrical_conductivity
+                }</div>
+                </div> 
+                <div>Water Quality: ${
+                  e.features[0].properties.water_quality
+                }</div>
+              </div>
+            </div>
+          </div>`
         )
         .addTo(map);
     });
@@ -158,17 +161,17 @@ const ChoroplethMap = ({ sitesData }) => {
 
     map.addControl(
       new mapboxgl.FullscreenControl({
-        container: mapContainerRef.current
+        container: mapContainerRef.current,
       }),
-      'bottom-right'
+      "bottom-right"
     );
 
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
+    map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
   };
 
   return (
     <Box width={"100%"} height={"400px"}>
-      <div ref={mapContainerRef} style={{width:"100%", height:"100%"}} />
+      <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
     </Box>
   );
 };

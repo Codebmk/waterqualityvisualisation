@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
 import * as d3 from "d3";
-import ScatterPlot from "./charts/scatterplot";
-import BarPlot from "./charts/barplot";
-import LollipopBarChart from "./charts/lollipop_plot";
-import ChoroplethMap from "./charts/map";
-import { transformDataToGeoJson } from "./charts/utils";
 import {
   Typography,
   AppBar,
@@ -14,13 +9,16 @@ import {
   CardContent,
   Paper,
 } from "@mui/material";
+import BarPlot from "./charts/barplot";
+import LollipopBarChart from "./charts/lollipop_plot";
+import ChoroplethMap from "./charts/map";
+import { transformDataToGeoJson } from "./charts/utils";
 import PieChart from "./charts/pie_plot";
-import PackedCircleChart from "./charts/stacked_pie";
 import BarChart from "./charts/bar_chart";
 import StackedBarChart from "../stackedbar_chart";
-import ViolinPlotChart from "./charts/tiny_line_charts";
 import DonutChart from "./charts/donut";
 import GroupedBarChart from "./charts/grouped_bar_chart";
+import BubbleChart from "./charts/bubble_chart";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -61,6 +59,13 @@ export default function App() {
     const uniqueWaterSourceTypes = [...new Set(waterSourceTypes)];
     return uniqueWaterSourceTypes;
   };
+
+  const dataGroupedByDistrict = (data) =>
+    d3.rollups(
+      data,
+      (v) => d3.mean(v, (d) => d.electrical_conductivity),
+      (d) => d.district
+    );
 
   return (
     <Box
@@ -127,51 +132,69 @@ export default function App() {
           <Grid container>
             <Grid container lg={12} sm={12} xl={2} xs={12}>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <ViolinPlotChart data={data} />
-              </Grid>
-              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <Paper elevation={3} style={{ margin: "10px" }}>
+                <Paper
+                  elevation={3}
+                  style={{
+                    margin: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
                   <DonutChart data={data} />
                 </Paper>
               </Grid>
-              <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <Paper elevation={3} style={{ margin: "10px" }}>
-                  <ScatterPlot data={data} />
+              <Grid
+                item
+                lg={12}
+                xs={12}
+                sm={12}
+                md={12}
+                xl={12}
+                position={"relative"}
+              >
+                <Paper
+                  elevation={3}
+                  style={{
+                    margin: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <BubbleChart data={dataGroupedByDistrict(data)} />
                 </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
                 <Paper elevation={3} style={{ margin: "10px" }}>
-                  <Typography
-                    margin={"10px"}
-                    variant="h6"
-                    color={"red"}
-                    fontWeight={"600"}
-                    textAlign={"center"}
-                  >
-                    Measure of acidification of water bodies by region
-                  </Typography>
                   <BarPlot data={data} />
                 </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <LollipopBarChart data={data} />
+                <Paper elevation={3} style={{ margin: "10px" }}>
+                  <LollipopBarChart data={data} />
+                </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
                 <Paper elevation={3} style={{ margin: "10px" }}>
-                  <Typography
-                    margin={"10px"}
-                    variant="h6"
-                    color={"red"}
-                    fontWeight={"600"}
-                    textAlign={"center"}
-                  >
-                    Proportion of Salinisation against source type by district
-                  </Typography>
                   <GroupedBarChart data={data} />
                 </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
-                <PieChart data={data} />
+                <Paper
+                  elevation={3}
+                  style={{
+                    margin: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <PieChart data={data} />
+                </Paper>
               </Grid>
               <Grid item lg={12} xs={12} sm={12} md={12} xl={12}>
                 <Paper elevation={3} style={{ margin: "10px" }}>
