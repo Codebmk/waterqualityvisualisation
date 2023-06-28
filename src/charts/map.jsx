@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Box } from "@mui/material";
 
 const MAP_BOX_TOKEN =
-  process.env.REACT_APP_MAP_BOX;
+  "pk.eyJ1IjoiYWlycW9tYXBzIiwiYSI6ImNrZmNhZHhhbzFkemUyenFzcWFmdW1wa3cifQ.R6XZOSugj-o9oYqmuf1COA";
 
 const ChoroplethMap = ({ sitesData }) => {
   const mapContainerRef = useRef(null);
