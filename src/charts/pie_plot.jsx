@@ -87,7 +87,7 @@ const PieChart = ({ data }) => {
         fontWeight={"600"}
         textAlign={"center"}
       >
-        Measure of salinisation of water bodies by region
+        Measure of Ecoli(Sewage indicator) in water bodies by region
       </Typography>
       <svg ref={chartRef} width="100%" height="400"></svg>
       <Box display={"flex"}>

@@ -20,7 +20,7 @@ import ChoroplethMap from "./charts/map";
 import { transformDataToGeoJson } from "./charts/utils";
 import PieChart from "./charts/pie_plot";
 import BarChart from "./charts/bar_chart";
-import StackedBarChart from "../stackedbar_chart";
+import StackedBarChart from "./charts/stackedbar_chart";
 import DonutChart from "./charts/donut";
 import GroupedBarChart from "./charts/grouped_bar_chart";
 import BubbleChart from "./charts/bubble_chart";
