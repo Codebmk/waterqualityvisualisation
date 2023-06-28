@@ -160,7 +160,7 @@ const BubbleChart = ({ data }) => {
         fontWeight={"600"}
         textAlign={"center"}
       >
-        Measure of acidification of water bodies by region
+        Measure of salinisation of water bodies by region
       </Typography>
       <svg id="d3_bubble" width="100%" height="400">
         {/* Add axes and bars */}
