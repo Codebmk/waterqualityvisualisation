@@ -111,7 +111,7 @@ export default function App() {
 
       {error && <Alert severity="info" style={{ margin: "10px" }}>
         <Typography variant="body1">
-          {error.message}
+          Server error!
         </Typography>
       </Alert>}
 

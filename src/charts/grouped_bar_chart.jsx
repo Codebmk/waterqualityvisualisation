@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Box, Typography } from "@mui/material";
 
 const GroupedBarChart = ({ data }) => {
   const d3_grouped_bar_chart_ref = useRef(null);
-
+  const [colorList, setColorList] = useState([]);
+  const [sourceTypeList, setSourceTypeList] = useState([]);
+  
   useEffect(() => {
+    let colors = [];
+    let source_types = [];
     if (data && data.length > 0) {
       // Chart dimensions
       const margin = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -38,11 +42,14 @@ const GroupedBarChart = ({ data }) => {
         .rangeRound([0, fx.bandwidth()])
         .padding(0.05);
 
-      const color = d3
+      const colorScale = d3
         .scaleOrdinal()
         .domain(sourceType)
         .range(d3.schemeSpectral[sourceType.size])
         .unknown("#ccc");
+
+        setColorList(colorScale.range());
+          setSourceTypeList(colorScale.domain());
 
       // Y encodes the height of the bar.
       const y = d3
@@ -61,11 +68,14 @@ const GroupedBarChart = ({ data }) => {
         .selectAll()
         .data(([, d]) => d)
         .join("rect")
-        .attr("x", (d) => x(d.source_type))
+        .attr("x", (d) => {
+          return x(d.source_type)
+        })
         .attr("y", (d) => y(d.electrical_conductivity))
         .attr("width", x.bandwidth())
         .attr("height", (d) => y(0) - y(d.electrical_conductivity))
-        .attr("fill", (d) => color(d.source_type));
+        .attr("fill", (d) => {
+          return colorScale(d.source_type)});
 
       // Append the horizontal axis.
       svg
@@ -112,7 +122,16 @@ const GroupedBarChart = ({ data }) => {
       >
         Measure of salinisation depending on source type within districts
       </Typography>
-      <svg ref={d3_grouped_bar_chart_ref} width="95%" height="400"></svg>
+      <svg ref={d3_grouped_bar_chart_ref} width="100%" height="410"></svg>
+
+      <Box display={"flex"}>
+        {sourceTypeList && sourceTypeList.length > 0 && sourceTypeList.map((item,index)=>(<Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <Box width={"20px"} height={"20px"} backgroundColor={colorList[index]} />
+          <Typography variant="body2" sx={{ m: 1 }}>
+            {item}
+          </Typography>
+        </Box>))}
+      </Box>
     </Box>
   );
 };
